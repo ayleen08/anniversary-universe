@@ -2,161 +2,145 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Little Universe for You</title>
-<meta name="theme-color" content="#100d1b">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#100918">
+<title>Somewhere in the Stars ✦</title>
 <style>
-:root{--night:#100d1b;--night2:#191225;--wine:#6f2949;--rose:#e8b6cc;--cream:#fff0e8;--muted:#c5b4c9;--gold:#f3d89b}
+:root{--night:#100918;--deep:#180d25;--purple:#38204e;--wine:#6c2347;--pink:#f0a9cf;--blush:#ffd9eb;--lilac:#c9a8ff;--gold:#f4d8a0;--muted:#c8b4d1;--panel:#21142deF}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:radial-gradient(ellipse at top,#2a1837 0%,var(--night) 52%,#090811 100%);color:var(--cream);font-family:Georgia,"Times New Roman",serif;min-height:100vh}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.55;background-image:radial-gradient(2px 2px at 20px 30px,#fff 50%,transparent 60%),radial-gradient(1px 1px at 90px 80px,#f5d9ed 50%,transparent 60%),radial-gradient(1.5px 1.5px at 150px 40px,#fff 50%,transparent 60%),radial-gradient(1px 1px at 200px 120px,#e7c8ff 50%,transparent 60%);background-size:230px 170px;animation:twinkle 7s ease-in-out infinite alternate}
-@keyframes twinkle{from{opacity:.25}to{opacity:.7}}
+body{margin:0;min-height:100vh;color:#fff0f7;background:radial-gradient(ellipse at 50% -15%,#552b69 0%,#24122f 32%,var(--night) 72%);font-family:Georgia,"Times New Roman",serif;overflow-x:hidden}
+#starfield{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 15% 35%,#7a2c6330,transparent 35%),radial-gradient(ellipse at 85% 70%,#593c8a28,transparent 38%)}
+header,main,footer{position:relative;z-index:1}
+header{position:sticky;top:0;z-index:10;background:#100918df;backdrop-filter:blur(14px);border-bottom:1px solid #e6a4d51f}
+.nav{max-width:1120px;margin:auto;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.brand{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);white-space:nowrap}
+nav{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
 button,a{font:inherit}
 button{cursor:pointer}
-a{color:var(--rose)}
-header{position:sticky;top:0;z-index:5;backdrop-filter:blur(14px);background:#100d1bdc;border-bottom:1px solid #ffffff16}
-.nav{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 20px}
-.brand{font-size:15px;letter-spacing:.12em;color:var(--rose);text-transform:uppercase}
-nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-nav button,.btn{border:1px solid #a75d7a77;background:#291a30;color:var(--cream);padding:9px 13px;border-radius:999px;transition:.2s}
-nav button:hover,.btn:hover{background:var(--wine);transform:translateY(-1px)}
-main{max-width:1000px;margin:auto;padding:28px 20px 70px;position:relative}
-section{display:none;animation:appear .5s ease}
+nav button,.btn{border:1px solid #d27cab60;background:#281631;color:#fff0f7;padding:9px 13px;border-radius:999px;transition:transform .2s,background .2s,border-color .2s}
+nav button:hover,.btn:hover{background:#6c2347;transform:translateY(-2px);border-color:#f0a9cf}
+main{max-width:1020px;margin:auto;padding:24px 18px 70px}
+section{display:none;animation:arrive .55s ease}
 section.active{display:block}
-@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.hero{min-height:72vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.moon{font-size:60px;filter:drop-shadow(0 0 24px #caa4ff88);animation:float 5s ease-in-out infinite}
-@keyframes float{50%{transform:translateY(-9px)}}
-.eyebrow{color:var(--gold);letter-spacing:.24em;text-transform:uppercase;font-size:11px}
-h1{font-size:clamp(42px,8vw,78px);font-weight:normal;line-height:1.04;margin:16px 0;color:var(--rose);text-shadow:0 0 35px #d06d9b38}
-h2{font-weight:normal;color:var(--rose);font-size:clamp(30px,5vw,46px);margin:10px 0}
-h3{color:var(--gold);font-weight:normal;margin-top:0}
-p{line-height:1.7;color:#e6d7e5}
-.lead{font-size:19px;max-width:620px}
+@keyframes arrive{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.hero{min-height:75vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px 0}
+.moon{font-size:62px;color:var(--lilac);filter:drop-shadow(0 0 20px #c9a8ffb0);animation:float 5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px) rotate(4deg)}}
+.eyebrow{text-transform:uppercase;letter-spacing:.22em;color:var(--gold);font-size:11px}
+h1{font-weight:normal;font-size:clamp(44px,8vw,82px);line-height:1.02;color:var(--pink);text-shadow:0 0 32px #e68ecb50;margin:17px 0}
+h2{font-size:clamp(32px,5vw,48px);font-weight:normal;color:var(--pink);margin:10px 0}
+h3{font-weight:normal;color:var(--gold);margin-top:0}
+p{line-height:1.75;color:#eadbea}
+.lead{font-size:19px;max-width:650px}
+.small{font-size:12px;color:var(--muted)}
 .center{text-align:center}
-.panel{background:linear-gradient(145deg,#24182fe8,#17111ff2);border:1px solid #bd7c9a40;border-radius:22px;padding:24px;box-shadow:0 18px 55px #00000020}
-.grid{display:grid;grid-template-columns:repeat( auto-fit,minmax(220px,1fr));gap:14px;margin:24px 0}
-.tile{min-height:150px;text-align:left;border:1px solid #c47e9a55;border-radius:18px;background:linear-gradient(145deg,#321d37,#1b1426);padding:20px;color:var(--cream);transition:.2s}
-.tile:hover{transform:translateY(-4px);border-color:var(--rose)}
-.tile .emoji{font-size:30px;display:block;margin-bottom:14px}
-.tile strong{display:block;color:var(--rose);font-size:19px;font-weight:normal;margin-bottom:7px}
-.small{font-size:13px;color:var(--muted)}
-.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center}
-.timeline{border-left:1px solid #b86a8c;margin:25px 0 25px 10px;padding-left:23px}
-.memory{position:relative;padding:0 0 22px}
-.memory:before{content:"✦";position:absolute;left:-31px;top:0;color:var(--gold)}
-.memory h3{margin-bottom:4px}
-.envelopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:20px}
-.envelope{border:1px solid #bd7c9a66;border-radius:16px;background:#28182e;padding:20px 14px;color:var(--cream);min-height:140px}
+.panel{background:linear-gradient(145deg,#2b1938ed,#17101ff2);border:1px solid #d27cab45;border-radius:22px;padding:24px;box-shadow:0 18px 55px #0003}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:24px 0}
+.tile{display:block;width:100%;min-height:145px;text-align:left;border:1px solid #d27cab60;border-radius:18px;background:linear-gradient(145deg,#382047,#211329);padding:20px;color:#fff0f7;transition:.25s}
+.tile:hover{transform:translateY(-4px);border-color:var(--pink);box-shadow:0 10px 30px #d85e9b20}
+.tile .emoji{font-size:30px;display:block;margin-bottom:12px}
+.tile strong{display:block;color:var(--pink);font-size:19px;font-weight:normal;margin-bottom:7px}
+.row{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+.timeline{border-left:1px solid #bd6595;margin:25px 0 25px 10px;padding-left:23px}
+.memory{position:relative;padding:0 0 20px}
+.memory:before{content:"✦";position:absolute;left:-31px;color:var(--gold)}
+.envelopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:14px;margin-top:20px}
+.envelope{border:1px solid #d27cab66;border-radius:16px;background:#2a1734;padding:20px 14px;color:#fff0f7;min-height:140px}
 .envelope span{display:block;font-size:32px;margin-bottom:10px}
-.letter{display:none;margin-top:14px;padding:18px;border-radius:14px;background:#f8e9e1;color:#3c2135;line-height:1.7}
-.letter p{color:#3c2135}
-input[type=text]{background:#100d1b;border:1px solid #bd7c9a;color:var(--cream);padding:12px;border-radius:10px;width:min(100%,360px)}
-.feedback{min-height:28px;color:var(--gold)}
-.photo-placeholder{min-height:130px;display:flex;align-items:center;justify-content:center;text-align:center;border:1px dashed #c47e9a88;border-radius:15px;background:#21172b;padding:12px;color:var(--muted)}
-footer{text-align:center;color:#a995ad;font-size:12px;padding:25px}
-hr{border:0;border-top:1px solid #bd7c9a33;margin:24px 0}
-@media(max-width:650px){.nav{align-items:flex-start;flex-direction:column}.nav nav{justify-content:flex-start}nav button{font-size:12px;padding:8px 10px}main{padding:20px 14px 55px}.panel{padding:18px}}
+.letter{display:none;margin-top:14px;padding:20px;border-radius:14px;background:#f9e7f0;color:#41213b;line-height:1.7}
+.letter p{color:#41213b}
+input[type=text],input[type=password]{background:#100918;border:1px solid #d27cab;color:#fff0f7;padding:12px;border-radius:10px;width:min(100%,360px)}
+.feedback{min-height:25px;color:var(--gold)}
+.placeholder{min-height:130px;display:flex;align-items:center;justify-content:center;text-align:center;border:1px dashed #d27cab88;border-radius:15px;background:#21152a;padding:12px;color:var(--muted)}
+.star-secret{position:fixed;right:18px;bottom:18px;z-index:20;border:1px solid #e6a4d5aa;background:#291532;color:#ffd9eb;border-radius:50%;width:48px;height:48px;font-size:22px;box-shadow:0 0 22px #d85e9b40;animation:glow 3s infinite alternate}
+@keyframes glow{to{box-shadow:0 0 28px #f0a9cf99}}
+footer{text-align:center;color:#a995b5;font-size:12px;padding:25px}
+hr{border:0;border-top:1px solid #d27cab30;margin:24px 0}
+.hidden{display:none!important}
+@media(max-width:680px){.nav{align-items:flex-start;flex-direction:column}nav{justify-content:flex-start}nav button{font-size:12px;padding:8px 10px}main{padding:18px 13px 50px}.panel{padding:18px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 <body>
-<header><div class="nav"><div class="brand">✦ our little universe</div><nav aria-label="Main navigation">
-<button onclick="showPage('home')">Home</button><button onclick="showPage('story')">Our story</button><button onclick="showPage('letters')">Letters</button><button onclick="showPage('game')">Game</button><button onclick="showPage('music')">Music</button><button onclick="showPage('gallery')">Gallery</button><button onclick="showPage('ending')">The last star</button>
+<canvas id="starfield" aria-hidden="true"></canvas>
+<header><div class="nav"><div class="brand">✦ somewhere in the stars</div><nav aria-label="Main navigation">
+<button onclick="showPage('home')">Home</button><button onclick="showPage('story')">Our story</button><button onclick="showPage('letters')">Letters</button><button onclick="showPage('game')">Game</button><button onclick="showPage('music')">Music</button><button onclick="showPage('gallery')">Gallery</button><button onclick="showPage('ending')">Last star</button>
 </nav></div></header>
 <main>
-<section id="home" class="active">
-<div class="hero">
-<div class="moon">☾</div><div class="eyebrow">a tiny place in an enormous universe</div>
-<h1>A Little<br>Universe</h1>
-<p class="lead">made for you, my love.</p>
-<p>Somewhere between all the stars, there is a little world that belongs to us.<br>Come explore it, handsome. ✦</p>
-<div class="row"><button class="btn" onclick="showPage('story')">Enter our universe ✧</button><button class="btn" onclick="showPage('letters')">I have letters for you 💌</button></div>
-<p class="small" style="margin-top:25px">Warning: may contain terrible jokes and an unreasonable amount of love.</p>
-</div>
-</section>
-<section id="story">
-<div class="eyebrow">chapter one</div><h2>Our little story</h2><p class="lead">A few tiny moments that somehow became one of my favourite things.</p>
-<div class="panel"><p>Replace the example moments below with your real memories, dates, screenshots or little details only Stephen would understand.</p>
-<div class="timeline">
-<div class="memory"><h3>✦ The beginning</h3><div class="small">[add your date here]</div><p>“I didn't know then how much you would come to mean to me.”</p></div>
-<div class="memory"><h3>✦ The moment I knew</h3><div class="small">[add a date or memory]</div><p>Add the conversation, joke or little moment that made you feel especially close to him.</p></div>
-<div class="memory"><h3>✦ Our ridiculous era</h3><div class="small">[your favourite inside joke]</div><p>Every great love story needs at least one deeply unserious chapter.</p></div>
-<div class="memory"><h3>✦ Still choosing you</h3><div class="small">Today and whatever comes next</div><p>Even from far away, you are part of my everyday life. And I want more chapters with you.</p></div>
-</div></div><div class="row"><button class="btn" onclick="showPage('letters')">Next: open a letter →</button></div>
-</section>
-<section id="letters">
-<div class="eyebrow">sealed with love</div><h2>A room full of letters</h2><p class="lead">Pick an envelope. Some are sweet. Some are suspiciously cheesy. All are yours.</p>
+<section id="home" class="active"><div class="hero">
+<div class="moon">☾</div><div class="eyebrow">a signal from somewhere far away</div>
+<h1>Somewhere<br>in the Stars</h1>
+<p class="lead">A little universe. A few secrets. One very important person.</p>
+<p>You've found a tiny corner of the galaxy that wasn't on any map.<br>There are things hidden here. Some are silly. Some are true.<br>All of them are waiting for you.</p>
+<div class="row"><button class="btn" onclick="showPage('story')">Follow the starlight ✧</button><button class="btn" onclick="showPage('game')">I like a mystery</button></div>
+<p class="small" style="margin-top:24px">Explorer's warning: this galaxy contains terrible jokes and an unreasonable amount of affection.</p>
+<div class="panel" style="margin-top:12px;max-width:400px;width:100%"><div class="small">TIME SPENT IN THIS UNIVERSE TOGETHER</div><div id="counter" style="font-size:25px;color:var(--pink);margin:9px 0">A little forever</div><div class="small">Change the start date in the code to make this counter yours.</div></div>
+</div></section>
+<section id="story"><div class="eyebrow">chapter one</div><h2>Coordinates: us</h2><p class="lead">A few moments that somehow became one of my favourite stories.</p>
+<div class="panel"><p>Replace these examples with your real memories, dates, and little details only Stephen would understand.</p><div class="timeline">
+<div class="memory"><h3>✦ First contact</h3><div class="small">[add your date here]</div><p>I didn't know then how much you would come to mean to me.</p></div>
+<div class="memory"><h3>✦ A favourite memory</h3><div class="small">[add a date or moment]</div><p>Add a conversation, joke, or tiny moment that made you feel especially close.</p></div>
+<div class="memory"><h3>✦ Our ridiculous era</h3><div class="small">[inside joke goes here]</div><p>Every great love story needs at least one deeply unserious chapter.</p></div>
+<div class="memory"><h3>✦ Still choosing you</h3><div class="small">Today and whatever comes next</div><p>Even from far away, you are part of my everyday life. I want more chapters with you.</p></div>
+</div></div><div class="row"><button class="btn" onclick="showPage('letters')">Next: open a letter →</button></div></section>
+<section id="letters"><div class="eyebrow">sealed in stardust</div><h2>Messages from another galaxy</h2><p class="lead">Choose an envelope. One may be cheesy. One may roast you. You've been warned.</p>
 <div class="envelopes">
-<button class="envelope" onclick="openLetter(0)"><span>💌</span>Open when you miss me</button>
-<button class="envelope" onclick="openLetter(1)"><span>🌧️</span>Open on a bad day</button>
-<button class="envelope" onclick="openLetter(2)"><span>😂</span>Open when you need a laugh</button>
-<button class="envelope" onclick="openLetter(3)"><span>🌙</span>Open when we're finally together</button>
-</div>
-<div id="letterDisplay" class="letter" aria-live="polite"></div>
-<p class="small">Tip: swap these starter messages for your own words. The personal details are what will make this gift unforgettable.</p>
-</section>
-<section id="game">
-<div class="eyebrow">a very serious scientific test</div><h2>How well do you know us?</h2><p class="lead">Answer these highly important questions to earn your next star.</p>
-<div class="panel">
-<h3>Question 1</h3><p>What's the most likely thing we'll do together on a call?</p>
-<div class="row"><button class="btn" onclick="answer(false,'Not even close. You may be handsome but your research needs work. 😂')">A. Behave normally</button><button class="btn" onclick="answer(true,'Correct. A perfect blend of chaos and affection. ⭐')">B. Laugh at something ridiculous</button><button class="btn" onclick="answer(false,'Wrong answer. Please surrender your imaginary boyfriend licence.')">C. Discuss tax policy</button></div>
-<p id="feedback1" class="feedback"></p>
-<hr>
-<h3>Question 2</h3><p>What is the secret ingredient in this website?</p>
-<div class="row"><button class="btn" onclick="answer(false,'Nice try. It is not made of cheese.')">A. Cheese</button><button class="btn" onclick="answer(true,'Correct. Ridiculous quantities of love. ⭐')">B. Love and an alarming amount of effort</button><button class="btn" onclick="answer(false,'Nope. Although stars are definitely involved.')">C. Actual space dust</button></div>
-<p id="feedback2" class="feedback"></p>
-<p class="small">Change the questions and correct answers to your own inside jokes before the big reveal.</p>
-</div><div class="row"><button class="btn" onclick="showPage('music')">You survived. Next →</button></div>
-</section>
-<section id="music">
-<div class="eyebrow">our soundtrack</div><h2>Songs that feel like us</h2><p class="lead">A few songs, each attached to a little reason I chose it.</p>
-<div class="grid">
-<div class="panel"><h3>♫ Song number one</h3><p>“This one reminds me of you because…”</p><a href="https://open.spotify.com/" target="_blank" rel="noopener">Add your Spotify link ↗</a></div>
-<div class="panel"><h3>♫ Our comfort song</h3><p>“For the days when I wish I could be right next to you.”</p><a href="https://music.youtube.com/" target="_blank" rel="noopener">Add your YouTube Music link ↗</a></div>
-<div class="panel"><h3>♫ The silly one</h3><p>“No explanation. You know what you did.”</p><a href="https://open.spotify.com/" target="_blank" rel="noopener">Add another song ↗</a></div>
-</div>
-<p class="small">Music links open the streaming service. This starter version doesn't autoplay music, so it won't surprise him with sound.</p>
-<div class="panel"><h3>A little message in my voice</h3><p>Record a voice note on your phone and add it to the project later as an audio file, or link to a private file with access restricted to him.</p></div>
-</section>
-<section id="gallery">
-<div class="eyebrow">our tiny museum</div><h2>Proof of our existence</h2><p class="lead">Favourite screenshots, photos, silly quotes and little things I never want to forget.</p>
-<div class="grid">
-<div><div class="photo-placeholder">✧ Add a favourite photo ✧</div><p class="small">Caption: the memory behind this one.</p></div>
-<div><div class="photo-placeholder">✧ Add a funny screenshot ✧</div><p class="small">Caption: context is probably necessary.</p></div>
-<div><div class="photo-placeholder">✧ Add a meaningful moment ✧</div><p class="small">Caption: why I saved it.</p></div>
-</div>
-<div class="panel"><h3>Three things I never want to forget</h3><p>01. [a tiny thing he does that you love]</p><p>02. [an inside joke that always makes you laugh]</p><p>03. [a moment when he made you feel loved]</p></div>
-<p class="small">To add real images, put them in an images folder and replace each placeholder with an image element pointing to its file. Don't upload private screenshots to a public repository.</p>
-</section>
-<section id="ending">
-<div class="hero" style="min-height:65vh">
-<div class="moon">✦</div><div class="eyebrow">you found the last star</div><h2>The final little secret</h2>
-<p class="lead">There's one last thing I want you to know.</p>
-<div class="panel" style="max-width:680px">
-<p>Stephen, if you've made it all the way here, then you've officially completed the extremely prestigious tour of my brain.</p>
-<p>There were jokes, stars, probably at least one embarrassing amount of sentiment, and a whole lot of love hidden in these pages.</p>
-<p>I wish I could put every hug, every laugh, every ordinary day I want to spend with you into one little place. I can't. So I made this instead.</p>
-<p>Thank you for being part of my world. I love the silly things, the serious things, the conversations that go nowhere and the ones I'll remember forever. And I want there to be so many more of them.</p>
-<p style="color:#7b3456;font-size:20px">No matter how big the universe is, you're one of my favourite places in it. ❤️</p>
-<p style="text-align:right;color:#7b3456">— your girl</p>
-</div>
-<p class="small">Personalise this ending with your own words before you send it to him.</p>
-<button class="btn" onclick="showPage('home')">Return to our universe ↺</button>
-</div>
-</section>
-<footer>made with love, a little chaos, and far too many stars ✦</footer>
+<button class="envelope" onclick="openLetter(0)"><span>💌</span>Open when you miss me</button><button class="envelope" onclick="openLetter(1)"><span>🌧️</span>Open on a bad day</button><button class="envelope" onclick="openLetter(2)"><span>😂</span>Open when you need a laugh</button><button class="envelope" onclick="openLetter(3)"><span>🌙</span>Open when we're together</button>
+</div><div id="letterDisplay" class="letter" aria-live="polite"></div><p class="small">Make these letters sound like you. The personal details are the magic.</p></section>
+<section id="game"><div class="eyebrow">classified galactic research</div><h2>Important questions, apparently</h2><p class="lead">Answer correctly to earn an imaginary medal and my continued respect.</p><div class="panel">
+<h3>Question 1</h3><p>What's the most likely thing we'll do together on a call?</p><div class="row"><button class="btn" onclick="answer('f1',false,'Incorrect. Please return your imaginary boyfriend licence.')">A. Behave normally</button><button class="btn" onclick="answer('f1',true,'Correct. Chaos and affection: our natural habitat. ⭐')">B. Laugh at something ridiculous</button><button class="btn" onclick="answer('f1',false,'Tax policy? Who are you and what have you done with Stephen?')">C. Discuss tax policy</button></div><p id="f1" class="feedback"></p>
+<hr><h3>Question 2</h3><p>What powers this website?</p><div class="row"><button class="btn" onclick="answer('f2',false,'Nope. Space dust is expensive.')">A. Space dust</button><button class="btn" onclick="answer('f2',true,'Correct. Love, effort, and several open browser tabs. ⭐')">B. Love and an alarming amount of effort</button><button class="btn" onclick="answer('f2',false,'Cheese is powerful but not quite that powerful.')">C. Cheese</button></div><p id="f2" class="feedback"></p>
+<hr><h3>Secret star challenge</h3><p>Enter the secret word to reveal a hidden message. Hint: the thing twinkling above us.</p><div class="row"><input id="secretWord" type="text" placeholder="Your secret word" autocomplete="off"><button class="btn" onclick="unlockSecret()">Unlock the star</button></div><p id="secretFeedback" class="feedback" aria-live="polite"></p><div id="secretMessage" class="letter"><h3>You found it ✦</h3><p>Congratulations, space explorer. You found a secret: I love you more than this website can fit into a thousand little stars. And yes, you are still a dork. ❤️</p></div><p class="small">Starter puzzle answer: starlight. This is a playful puzzle, not real security; the answer is visible in the website code.</p></div><div class="row"><button class="btn" onclick="showPage('music')">Next: our soundtrack →</button></div></section>
+<section id="music"><div class="eyebrow">the universe has a soundtrack</div><h2>Songs that feel like us</h2><p class="lead">Add songs and the reason each one belongs here.</p><div class="grid">
+<div class="panel"><h3>♫ The first one</h3><p>This reminds me of you because…</p><a href="https://open.spotify.com/" target="_blank" rel="noopener">Add your Spotify song link ↗</a></div>
+<div class="panel"><h3>♫ Our comfort song</h3><p>For the days when I wish I could be right next to you.</p><a href="https://music.youtube.com/" target="_blank" rel="noopener">Add your YouTube Music link ↗</a></div>
+<div class="panel"><h3>♫ The silly one</h3><p>No explanation. You know what you did.</p><a href="https://open.spotify.com/" target="_blank" rel="noopener">Add another song ↗</a></div>
+</div><div class="panel"><h3>Turn on a tiny bit of stardust ✨</h3><p>The sound button plays a gentle generated tone. It does not stream a copyrighted song, and it only starts after you click it.</p><button class="btn" id="soundToggle" onclick="toggleSound()">♫ Turn cosmic sound on</button><p id="soundStatus" class="small">Sound is off.</p></div><p class="small">Replace the generic links with the actual songs you want to share. Sound may need a click because browsers block autoplay.</p></section>
+<section id="gallery"><div class="eyebrow">the museum of us</div><h2>Evidence of our adventures</h2><p class="lead">Favourite pictures, screenshots, silly quotes, and little things worth keeping.</p><div class="grid">
+<div><div class="placeholder">✧ Add a favourite photo ✧</div><p class="small">Caption: the memory behind it.</p></div><div><div class="placeholder">✧ Add a funny screenshot ✧</div><p class="small">Caption: context may be required.</p></div><div><div class="placeholder">✧ Add a meaningful moment ✧</div><p class="small">Caption: why I saved it.</p></div>
+</div><div class="panel"><h3>Three things I never want to forget</h3><p>01. [a tiny thing he does that you love]</p><p>02. [an inside joke that always makes you laugh]</p><p>03. [a moment when he made you feel loved]</p></div><p class="small">Public GitHub Pages means files in this repository can be seen by others. Avoid uploading private screenshots or recordings.</p></section>
+<section id="ending"><div class="hero" style="min-height:65vh"><div class="moon">✦</div><div class="eyebrow">you found the edge of the galaxy</div><h2>One last thing</h2><p class="lead">The biggest thing in this little universe was never the stars.</p><div class="panel" style="max-width:690px">
+<p>Stephen, if you've made it all the way here, you've completed the very prestigious tour of my brain.</p><p>There were jokes, stars, probably an embarrassing amount of sentiment, and a whole lot of love hidden in these pages.</p><p>I wish I could put every hug, every laugh, every ordinary day I want to spend with you into one little place. I can't. So I made this instead.</p><p>Thank you for being part of my world. I love the silly things, the serious things, the conversations that go nowhere and the ones I'll remember forever. I want there to be so many more of them.</p><p style="color:#7b3456;font-size:20px">No matter how big the universe is, you're one of my favourite places in it. ❤️</p><p style="text-align:right;color:#7b3456">— your girl</p></div><p class="small">Replace this with your own words before the big reveal.</p><button class="btn" onclick="showPage('home')">Return to the stars ↺</button></div></section>
 </main>
+<button class="star-secret" title="A tiny hidden star" aria-label="A tiny hidden star" onclick="showPage('ending')">✦</button>
+<footer>made with love, a little chaos, and far too many stars ✦</footer>
 <script>
-function showPage(id){document.querySelectorAll('main section').forEach(s=>s.classList.toggle('active',s.id===id));window.scrollTo({top:0,behavior:'smooth'});if(id==='ending'){document.title='The Last Star ✦'}else{document.title='A Little Universe for You'}}
+// EDIT THIS DATE to your relationship's start date, in YYYY-MM-DD format.
+const RELATIONSHIP_START_DATE = "2023-01-01"; // replace with your real date
+function updateCounter(){
+ const start=new Date(RELATIONSHIP_START_DATE+"T00:00:00");
+ const now=new Date();
+ if(Number.isNaN(start.getTime())||RELATIONSHIP_START_DATE==="2023-01-01"){
+  document.getElementById("counter").textContent="A little forever";
+  return;
+ }
+ const days=Math.max(0,Math.floor((new Date(now.getFullYear(),now.getMonth(),now.getDate())-start)/86400000));
+ const years=Math.floor(days/365.2425),months=Math.floor((days-years*365.2425)/30.436875),remaining=Math.max(0,Math.floor(days-years*365.2425-months*30.436875));
+ document.getElementById("counter").textContent=years+" years · "+months+" months · "+remaining+" days";
+}
+updateCounter();
+function showPage(id){document.querySelectorAll("main section").forEach(s=>s.classList.toggle("active",s.id===id));window.scrollTo({top:0,behavior:"smooth"});document.title=(id==="home"?"Somewhere in the Stars":document.querySelector("#"+id+" h2")?.textContent||"Somewhere in the Stars")+" ✦";}
 const letters=[
-{title:'Open when you miss me',body:'I wish I could magically appear next to you right now. Until teleportation becomes a real thing, please imagine the biggest hug from me. I am cheering for you, thinking of you, and loving you from over here. Distance is annoying. You are worth it. ❤️'},
-{title:'Open on a bad day',body:'You do not have to be perfect to be loved. You do not have to have everything figured out today. Take a breath, be gentle with yourself, and remember that I am on your team. I believe in you, even on the days when you struggle to believe in yourself.'},
-{title:'Open when you need a laugh',body:'Congratulations. You have opened a letter written by your favourite person. Unfortunately, there is no cash prize. The prize is me being annoying forever. Terms and conditions: unlimited affection, questionable jokes, and absolutely no refunds. 😂'},
-{title:'Open when we are finally together',body:'One day I want to read this while I am actually next to you. No screen between us, no time-zone maths, no wishing I could reach through the phone. Just us. I want the ordinary moments too: laughing, eating, sitting together, and finally making memories in the same place.'}
+{title:"Open when you miss me",body:"I wish I could magically appear next to you right now. Until teleportation becomes a real thing, imagine the biggest hug from me. I am cheering for you, thinking of you, and loving you from over here. Distance is annoying. You are worth it. ❤️"},
+{title:"Open on a bad day",body:"You do not have to be perfect to be loved. You do not have to have everything figured out today. Take a breath and be gentle with yourself. I am on your team, and I believe in you even on the days when you struggle to believe in yourself."},
+{title:"Open when you need a laugh",body:"Congratulations. You have opened a letter written by your favourite person. Unfortunately, there is no cash prize. The prize is me being annoying forever. Terms and conditions: unlimited affection, questionable jokes, and absolutely no refunds. 😂"},
+{title:"Open when we're together",body:"One day I want to read this while I am actually next to you. No screen between us, no time-zone maths, no wishing I could reach through the phone. Just us, laughing, eating, sitting together, and finally making memories in the same place."}
 ];
-function openLetter(i){const el=document.getElementById('letterDisplay');el.innerHTML='<h3>'+letters[i].title+'</h3><p>'+letters[i].body+'</p>';el.style.display='block';el.scrollIntoView({behavior:'smooth',block:'nearest'})}
-function answer(correct,msg){const buttons=event.currentTarget.parentElement;const feedback=buttons.nextElementSibling;feedback.textContent=msg;feedback.style.color=correct?'#f3d89b':'#e8b6cc'}
+function openLetter(i){const el=document.getElementById("letterDisplay");el.innerHTML="<h3>"+letters[i].title+"</h3><p>"+letters[i].body+"</p>";el.style.display="block";el.scrollIntoView({behavior:"smooth",block:"nearest"});}
+function answer(id,correct,msg){const el=document.getElementById(id);el.textContent=msg;el.style.color=correct?"#f4d8a0":"#f0a9cf";}
+function unlockSecret(){const value=document.getElementById("secretWord").value.trim().toLowerCase();const feedback=document.getElementById("secretFeedback");if(value==="starlight"){document.getElementById("secretMessage").style.display="block";feedback.textContent="The stars recognise you. ✨";}else{feedback.textContent="Not quite, explorer. Hint: the thing twinkling above us.";}}
+let audioContext=null,oscillator=null,gainNode=null,soundOn=false;
+function toggleSound(){
+ const btn=document.getElementById("soundToggle"),status=document.getElementById("soundStatus");
+ if(soundOn){try{gainNode.gain.setTargetAtTime(0,audioContext.currentTime,0.15);oscillator.stop(audioContext.currentTime+0.5);}catch(e){}soundOn=false;btn.textContent="♫ Turn cosmic sound on";status.textContent="Sound is off.";return;}
+ try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC){status.textContent="Your browser does not support generated audio.";return;}audioContext=new AC();oscillator=audioContext.createOscillator();gainNode=audioContext.createGain();oscillator.type="sine";oscillator.frequency.value=174.61;gainNode.gain.value=0.018;oscillator.connect(gainNode);gainNode.connect(audioContext.destination);oscillator.start();soundOn=true;btn.textContent="♫ Turn cosmic sound off";status.textContent="A quiet cosmic tone is playing. Click again to stop it.";}catch(e){status.textContent="Sound could not start in this browser. Try again after clicking.";}
+}
+const canvas=document.getElementById("starfield"),ctx=canvas.getContext("2d");let stars=[];
+function resizeStars(){canvas.width=window.innerWidth*devicePixelRatio;canvas.height=window.innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);stars=Array.from({length:Math.min(150,Math.floor(window.innerWidth/7))},()=>({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,r:Math.random()*1.5+.3,a:Math.random()*.65+.15,s:Math.random()*.008+.002,p:Math.random()*6.28}));}
+function drawStars(){ctx.clearRect(0,0,window.innerWidth,window.innerHeight);for(const s of stars){s.p+=s.s;const alpha=s.a*(.55+.45*Math.sin(s.p));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle="rgba(255,220,244,"+alpha+")";ctx.fill();}requestAnimationFrame(drawStars);}
+window.addEventListener("resize",resizeStars);resizeStars();drawStars();
 </script>
 </body>
 </html>
