@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Knight's Quest for His Queen ⚔️</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#100b1c;color:#f8e7ef;font-family:Georgia,serif;min-height:100vh;background-image:radial-gradient(ellipse at 50% 5%,#392042 0,transparent 60%)}
+header{text-align:center;padding:20px 12px 9px}h1{font-size:clamp(23px,4vw,42px);margin:0;color:#f9d6e3;text-shadow:0 0 20px #bc558966}.sub{color:#c7adc8;font-style:italic;margin:8px}
+.wrap{width:min(100%,1020px);margin:auto;padding:0 10px 30px}.frame{position:relative;border:3px solid #966b8e;box-shadow:0 0 0 5px #25172c,0 14px 50px #0009;background:#1b1531;border-radius:8px;overflow:hidden}canvas{width:100%;height:auto;aspect-ratio:16/9;display:block;image-rendering:pixelated}
+.overlay{position:absolute;inset:0;background:#120e20df;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px}.overlay.hidden{display:none}.modal{max-width:630px;border:2px solid #a87999;background:#24192e;padding:23px 24px;box-shadow:0 10px 40px #000b}.modal h2{font-size:clamp(23px,3.4vw,36px);color:#ffcfdd;margin:0 0 14px}.modal p{font-size:clamp(14px,2vw,18px);line-height:1.6}button{font:inherit;color:#fff0f6;background:#743b69;border:1px solid #d99dba;padding:11px 17px;cursor:pointer;border-radius:5px}button:hover{background:#9a4e83}button:focus-visible{outline:3px solid #fff}.hud{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;color:#e6b9d2;font-size:14px;padding:11px 4px}.hud strong{color:white}.message{min-height:26px;text-align:center;color:#ffc9df;font-style:italic;padding:6px}.controls{display:flex;justify-content:space-between;gap:8px;margin:14px auto 0;max-width:680px;touch-action:none;user-select:none}.controls .group{display:flex;gap:8px}.controls button{width:68px;height:54px;font:700 23px system-ui;touch-action:none}.info{text-align:center;color:#bfa6c5;font-size:14px;line-height:1.5}a{color:#f6b7d3}.note{color:#caaac4;font-size:12px;text-align:center;margin:12px}.hidden{display:none!important}
+</style></head>
+<body><header><h1>⚔️ The Knight's Quest for His Queen 👑</h1><p class="sub">A most cursed adventure, by Her Majesty Ayleen</p></header>
+<div class="wrap"><div class="hud"><span>CHAPTER <strong id="level">1 / 4</strong></span><span>DEATHS <strong id="deaths">0</strong></span><span>CHECKPOINT <strong id="checkpoint">None</strong></span><span id="objective" style="width:100%;color:#f8c4dd">Find the rune • defeat the guardians • activate the altar</span><span><button id="restart" style="padding:5px 10px;font-size:13px">Restart level ↺</button></span></div>
+<div class="frame"><canvas id="game" width="960" height="540" aria-label="2D medieval platform game"></canvas>
+<div class="overlay" id="overlay"><div class="modal"><h2 id="modalTitle">A Royal Summons!</h2><p id="modalText">SIR STEPHEN! Her Majesty Ayleen has been taken to the Moonlit Keep. Leap over the spikes, evade the royal nuisances, and survive four increasingly evil trials. Fight spectres, collect golden runes, activate altars and defeat the final guardian with thy sword and shield. Thy queen awaits.</p><button id="start">Accept thy fate ⚔️</button></div></div></div>
+<div class="message" id="message" aria-live="polite">Move: A/D · Jump: Space · Sword: J · Shield: K · Restart: R</div>
+<div class="controls"><div class="group"><button id="left" aria-label="Move left">◀</button><button id="right" aria-label="Move right">▶</button></div><div class="group"><button id="jump" aria-label="Jump">⤒</button><button id="attack" aria-label="Sword attack">⚔</button><button id="shield" aria-label="Shield">🛡</button></div></div>
+<p class="info">Desktop: A/D or ←/→ to move, Space/W/↑ to jump, J to attack, K to shield. Mobile: use the buttons above.<br>Find the golden rune near the checkpoint, stand on the altar near the exit, fight ghosts with your sword, and parry the final boss’s magic. Spikes remain deadly. Reach the glowing pink gate!</p>
+<p class="note"><a href="index.html">← Return to Somewhere in the Stars</a> · Gothic black-armored Sir Stephen and Queen Ayleen — custom pixel-art designs.</p></div>
+<script>
+"use strict";
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;
+const $=id=>document.getElementById(id), W=960,H=540, groundY=500;
+const platforms=(arr)=>arr.map(([x,y,w,h=18])=>({x,y,w,h}));
+const spikes=(arr)=>arr.map(([x,y,w=42])=>({x,y,w,h:19}));
+const enemies=(arr)=>arr.map(([x,y,left,right,speed=1.4])=>({x,y,w:27,h:31,left,right,speed,dir:1,origin:x}));
+const levels=[
+ {name:"The Moat of Mild Inconvenience",sky:"#201733",start:[35,452],p:platforms([[0,500,170,40],[215,460,95],[365,418,95],[515,475,110],[690,428,100],[840,500,120,40]]),s:spikes([[170,520,45],[310,520,55],[460,520,55],[625,520,65],[790,520,50]]),e:enemies([[382,385,370,430,1.25]]),cp:[535,437],gate:[898,444],stars:42},
+ {name:"The Court of Treacherous Toes",sky:"#24132f",start:[30,452],p:platforms([[0,500,120,40],[156,452,70],[272,390,70],[390,460,74],[500,390,72],[617,320,70],[740,402,70],[860,500,100,40]]),s:spikes([[120,520,36],[226,520,46],[342,520,48],[464,520,36],[572,520,45],[687,520,53],[810,520,50],[403,442,32]]),e:enemies([[513,358,505,545,1.7],[747,370,744,779,1.4]]),cp:[512,352],gate:[901,444],stars:55},
+ {name:"The Dungeon of Extremely Bad Decisions",sky:"#18132b",start:[30,452],p:platforms([[0,500,105,40],[148,445,67],[260,385,65],[363,325,70],[468,390,65],[575,452,70],[685,380,70],[790,320,60],[865,500,95,40]]),s:spikes([[105,520,43],[215,520,45],[325,520,38],[433,520,35],[533,520,42],[645,520,40],[755,520,35],[850,520,15],[480,372,31]]),e:enemies([[375,292,367,401,1.8],[584,419,578,617,2.2],[795,287,792,820,1.5]]),cp:[478,351],gate:[906,444],stars:60},
+ {name:"The Final Trial of True Love (and Pain)",sky:"#29152e",start:[25,452],p:platforms([[0,500,100,40],[143,440,55],[245,365,55],[346,440,52],[447,348,54],[552,265,58],[658,350,53],[758,428,52],[862,500,98,40]]),s:spikes([[100,520,43],[198,520,47],[300,520,46],[398,520,49],[501,520,51],[610,520,48],[711,520,47],[810,520,52],[254,347,22],[670,332,22]]),e:enemies([[350,406,347,369,2.3],[559,232,555,577,2.4],[766,394,762,783,2.6]]),cp:[458,310],gate:[908,444],stars:75}
+];
+let state='menu',li=0,deaths=0,cpUsed=false,player,particles=[],tick=0,last=0,invuln=0,noticeUntil=0;let facing=1,attackFrames=0,attackCooldown=0,shieldFrames=0,hasKey=false,plateOn=false,projectiles=[],bossHP=0,keysCollected=0;
+const keys={left:false,right:false,jump:false,shield:false};let jumpQueued=false;
+const insults=["THOU HAST PERISHED, FOOL.","THE QUEEN EXPECTED BETTER, MY LORD.","THY ANKLES HAVE BETRAYED THEE.","A MOST EMBARRASSING DISPLAY OF KNIGHTHOOD.","HARK! ANOTHER SKILL ISSUE.","THOU ART NOT BUILT FOR THESE STREETS.","THE ROYAL COURT IS LAUGHING AT THEE.","GET UP, MINE BELOVED IDIOT.","THY JUMP WAS TRULY QUESTIONABLE.","THE MOAT CLAIMETH ANOTHER VICTIM."];
+const say=(s,ms=2200)=>{$('message').textContent=s;noticeUntil=performance.now()+ms};
+function resetPlayer(fromCheckpoint=false){const l=levels[li],start=fromCheckpoint&&cpUsed?[l.cp[0],l.cp[1]-43]:l.start;player={x:start[0],y:start[1],w:24,h:40,vx:0,vy:0,onGround:false,coyote:0};invuln=55}
+function loadLevel(index){li=index;cpUsed=false;hasKey=false;plateOn=false;projectiles=[];bossHP=index===3?5:0;attackFrames=0;attackCooldown=0;shieldFrames=0;levels[li].e.forEach(e=>{e.x=e.origin;e.dir=1;e.dead=false});resetPlayer();$('objective').textContent='Find the rune • defeat the guardians • activate the altar';$('level').textContent=`${li+1} / ${levels.length}`;$('checkpoint').textContent='None';say(`CHAPTER ${li+1}: ${levels[li].name}`,3300)}
+function startGame(){deaths=0;$('deaths').textContent=0;state='playing';$('overlay').classList.add('hidden');loadLevel(0)}
+function die(force=false){if(state!=='playing'||(invuln>0&&!force))return;deaths++;$('deaths').textContent=deaths;say(insults[(deaths-1)%insults.length]);resetPlayer(true)}
+function rect(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y}
+function complete(){if(li<levels.length-1){loadLevel(li+1)}else{state='won';$('modalTitle').textContent='THOU HAST WON MY HEART ❤️';$('modalText').innerHTML=`<span style="color:#f7b6d4">A royal decree from Queen Ayleen to Sir Stephen</span><br><br>my baby. thou hast conquered every cursed platform, survived ${deaths} most embarrassing death${deaths===1?'':'s'}, and reached me at last. i know this little game is silly but i wanted to make something that was just ours.<br><br>i love ur laugh and ur stupid jokes and how we can talk for hourssss without ever getting bored. i love how u make me feel safe and how u let me be there for u too. even when we're far apart, u are my favourite person in every kingdom and every universe.<br><br>one day there won't be a screen between us. until then, i shall keep choosing thee, my darling fool. happy anniversary honey. i love u so so much.<br><br><em>forever thy girl, Ayleen 💗</em>`;$('start').textContent='Play again, my lord ↺';$('overlay').classList.remove('hidden')}}
+function physics(dt){const l=levels[li],step=Math.min(dt,2);tick+=step;
+const oldY=player.y;
+const dir=(keys.right?1:0)-(keys.left?1:0);if(dir)facing=dir;attackFrames=Math.max(0,attackFrames-step);attackCooldown=Math.max(0,attackCooldown-step);shieldFrames=keys.shield?1:0;
+player.vx=dir*4.0;player.x+=player.vx*step;player.x=Math.max(0,Math.min(W-player.w,player.x));
+if(jumpQueued&&(player.onGround||player.coyote>0)){player.vy=-12.6;player.onGround=false;player.coyote=0}jumpQueued=false;
+player.vy=Math.min(14,player.vy+0.58*step);player.y+=player.vy*step;
+let landed=false;
+for(const p of l.p){if(player.vy>=0&&oldY+player.h<=p.y+9&&player.y+player.h>=p.y&&player.x+player.w>p.x+3&&player.x<p.x+p.w-3){player.y=p.y-player.h;player.vy=0;landed=true}}
+player.onGround=landed;player.coyote=landed?6:Math.max(0,player.coyote-step);
+if(!Number.isFinite(player.x)||!Number.isFinite(player.y)){resetPlayer(true);return}if(player.y>H+15){die(true);return}
+if(invuln>0)invuln-=step;
+for(const e of l.e){if(e.dead)continue;e.x+=e.speed*e.dir*step;if(e.x<=e.left){e.x=e.left;e.dir=1}if(e.x>=e.right){e.x=e.right;e.dir=-1}}
+if(attackFrames>0){const blade={x:facing>0?player.x+player.w:player.x-36,y:player.y+9,w:36,h:23};for(const e of l.e){if(!e.dead&&rect(blade,e)){e.dead=true;say('THE FOUL SPECTRE HATH BEEN VANQUISHED!')}}}
+if(invuln<=0&&(l.s.some(s=>rect(player,{x:s.x+5,y:s.y+5,w:s.w-10,h:14}))||l.e.some(e=>!e.dead&&rect(player,e)))){if(keys.shield&&l.e.some(e=>!e.dead&&rect(player,e))){invuln=25;say('THY SHIELD HATH SAVED THEE!')}else{die();return}}
+const keyPos={x:l.cp[0]+32,y:l.cp[1]-60,w:18,h:20};if(!hasKey&&rect(player,keyPos)){hasKey=true;keysCollected++;say('THOU HAST CLAIMED THE GOLDEN RUNE!');$('objective').textContent='Rune acquired • seek the altar'}
+const altar={x:l.gate[0]-70,y:l.gate[1]+24,w:35,h:30};if(hasKey&&rect(player,altar)&&!plateOn){plateOn=true;say('THE ANCIENT ALTAR AWAKENS!');$('objective').textContent=li===3?'Defeat the final guardian!':'The gate is unlocked!'}
+if(li===3){if(tick%65<step){projectiles.push({x:850,y:340+(Math.sin(tick*.08)*65),vx:-3.6,w:14,h:14})}for(const b of projectiles){b.x+=b.vx*step;if(rect(player,b)){if(keys.shield){b.dead=true;say('THOU HAST PARRIED THE DARK MAGIC!')}else if(invuln<=0){die();return}}if(attackFrames>0&&rect({x:facing>0?player.x+player.w:player.x-36,y:player.y+9,w:36,h:23},b)){b.dead=true;bossHP=Math.max(0,bossHP-1);say('A BLOW UPON THE FINAL GUARDIAN!')}}projectiles=projectiles.filter(b=>!b.dead&&b.x>-20)}
+if(!cpUsed&&rect(player,{x:l.cp[0]-4,y:l.cp[1]-25,w:25,h:44})){cpUsed=true;$('checkpoint').textContent='Claimed ✓';say('THE ROYAL CHECKPOINT HATH BEEN CLAIMED!',2500)}
+if(rect(player,{x:l.gate[0],y:l.gate[1],w:40,h:56})){if(hasKey&&plateOn&&(li!==3||bossHP===0))complete();else if(tick%80<step)say(li===3&&bossHP>0?'DEFEAT THE GUARDIAN! Strike its magic bolts!':'THE GATE IS SEALED! Find the rune and altar.')}
+}
+function rng(n){let x=Math.sin(n*127.1+li*311.7)*43758.5453;return x-Math.floor(x)}
+function box(x,y,w,h,color){ctx.fillStyle=color;ctx.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h))}
+function scene(){const l=levels[li];ctx.fillStyle=l.sky;ctx.fillRect(0,0,W,H);
+for(let i=0;i<l.stars;i++){let x=rng(i+4)*W,y=rng(i+99)*370;box(x,y,2+(i%3===0?1:0),2,'#d5b3df');if(i%8===0){ctx.globalAlpha=.4+.3*Math.sin(tick*.035+i);box(x-3,y+1,8,1,'#edc7ec');ctx.globalAlpha=1}}
+ctx.fillStyle='#f6d9f0';ctx.beginPath();ctx.arc(790,92,40,0,Math.PI*2);ctx.fill();ctx.fillStyle=l.sky;ctx.beginPath();ctx.arc(809,77,38,0,Math.PI*2);ctx.fill();
+for(let i=0;i<8;i++){const x=i*135-20,h=90+(i*43)%115;box(x,500-h,86,h,'#21182d');box(x+17,500-h-28,19,28,'#21182d');box(x+51,500-h-28,19,28,'#21182d');for(let j=0;j<3;j++)box(x+12+j*23,500-h+26,8,17,'#54344e')}
+box(0,520,W,20,'#130d19');for(const p of l.p){box(p.x,p.y,p.w,p.h,'#6e5b77');box(p.x,p.y,p.w,5,'#c49caa');for(let x=p.x+8;x<p.x+p.w-7;x+=24)box(x,p.y+9,2,Math.max(0,p.h-12),'#49394e')}
+for(const s of l.s){for(let x=s.x;x<s.x+s.w-3;x+=14){ctx.fillStyle='#ed738c';ctx.beginPath();ctx.moveTo(x,s.y+19);ctx.lineTo(x+7,s.y);ctx.lineTo(x+14,s.y+19);ctx.fill()}}
+for(const e of l.e){if(e.dead)continue;box(e.x+5,e.y+7,18,24,'#9253b6');box(e.x+2,e.y+12,24,13,'#a76bc7');box(e.x+7,e.y+1,15,15,'#b47ed1');box(e.x+9,e.y+10,3,4,'#fff');box(e.x+17,e.y+10,3,4,'#fff');box(e.x+10,e.y+12,1,2,'#20112b');box(e.x+18,e.y+12,1,2,'#20112b')}
+if(!hasKey){const kx=l.cp[0]+32,ky=l.cp[1]-60;box(kx+5,ky,8,15,'#ffdf70');box(kx,ky+4,18,7,'#ffeaa4');box(kx+7,ky+15,4,8,'#d69b45')}
+const altarX=l.gate[0]-70,altarY=l.gate[1]+24;box(altarX,altarY,35,30,plateOn?'#bce9b6':'#8b668f');box(altarX+8,altarY+4,19,8,plateOn?'#e2ffd5':'#dfb9f1');
+if(li===3){box(835,283,53,58,'#533260');box(843,276,36,12,'#ba70bf');box(847,302,8,8,'#f1a2d2');box(870,302,8,8,'#f1a2d2');for(let i=0;i<5;i++)box(829+i*12,263,9,5,i<bossHP?'#ff92b2':'#483149');for(const b of projectiles)box(b.x,b.y,b.w,b.h,'#ef8bdf')}
+const [cx,cy]=l.cp;box(cx,cy-22,4,47,'#e7c6a5');box(cx+4,cy-22,24,15,cpUsed?'#f4d46e':'#d1a55b');box(cx+8,cy-17,10,5,'#fff1ba');
+const [gx,gy]=l.gate;ctx.fillStyle='#e98cb5';ctx.globalAlpha=.2+.1*Math.sin(tick*.07);ctx.fillRect(gx-12,gy-12,60,74);ctx.globalAlpha=1;box(gx,gy,40,56,'#7d4676');box(gx+5,gy+6,30,50,'#f4a3d0');box(gx+11,gy+12,18,44,'#4c294c');box(gx+17,gy+22,6,9,'#fff0a3');
+drawKnight(player.x,player.y);if(keys.shield){box(player.x+(facing>0?19:-9),player.y+14,12,23,'#88d2df');box(player.x+(facing>0?22:-6),player.y+19,6,13,'#d6f8f4')}if(attackFrames>0){box(player.x+(facing>0?23:-37),player.y+12,36,5,'#f9f4e4');box(player.x+(facing>0?51:-36),player.y+8,5,13,'#f6d8a3')}
+box(13,14,440,33,'#150e22aa');ctx.fillStyle='#f6d5e8';ctx.font='18px Georgia';ctx.fillText(l.name,23,37);
+}
+function drawKnight(x,y){
+ if(invuln>0&&Math.floor(invuln/5)%2===0)return;
+ x=Math.round(x);y=Math.round(y);
+ // Blackened steel, horned gothic helm, silver etching and a crimson-black cape.
+ box(x+3,y+14,19,23,'#160f1e');box(x+1,y+18,7,18,'#4a182b');
+ box(x+6,y+2,13,17,'#14151d');box(x+4,y+7,17,11,'#272a34');
+ box(x+2,y+0,5,10,'#171923');box(x+17,y+0,5,10,'#171923');
+ box(x+3,y+1,3,5,'#7d8191');box(x+18,y+1,3,5,'#7d8191');
+ box(x+7,y+10,11,4,'#090b10');box(x+9,y+11,3,2,'#d74979');box(x+15,y+11,2,2,'#d74979');
+ box(x+7,y+17,12,15,'#262630');box(x+9,y+18,8,2,'#a5a3b4');
+ box(x+11,y+20,3,8,'#6d657e');box(x+8,y+24,10,2,'#4e425d');
+ box(x+2,y+18,5,12,'#31313c');box(x+19,y+18,5,12,'#31313c');
+ box(x+3,y+21,3,4,'#9992a5');box(x+20,y+21,3,4,'#9992a5');
+ box(x+6,y+31,6,9,'#15151d');box(x+15,y+31,6,9,'#15151d');
+ box(x+6,y+36,7,3,'#686476');box(x+15,y+36,7,3,'#686476');
+ box(x+8,y+4,9,2,'#6c6879');
+}
+function drawQueen(){
+ // Gothic Princess Ayleen: long black hair, dark tiara, curvy hourglass gown.
+ const x=440,y=228;
+ // dramatic layered skirt, with flared hip silhouette
+ box(x-19,y+68,65,12,'#180e21');box(x-27,y+80,81,22,'#24112b');
+ box(x-34,y+101,95,15,'#31152e');box(x-39,y+115,105,14,'#180e21');
+ box(x-25,y+85,77,4,'#67304f');box(x-31,y+108,89,3,'#9d4d75');
+ // long flowing jet black hair behind the body
+ box(x-9,y+12,45,74,'#08090f');box(x-14,y+25,12,66,'#101018');
+ box(x+29,y+24,12,67,'#101018');box(x-12,y+44,6,37,'#302036');
+ // pale face and dark bangs
+ box(x+3,y+14,22,27,'#e6b6aa');box(x-2,y+10,31,12,'#0b0b11');
+ box(x+1,y+18,6,9,'#0b0b11');box(x+24,y+17,5,15,'#0b0b11');
+ box(x+7,y+27,4,3,'#2a172a');box(x+19,y+27,4,3,'#2a172a');
+ box(x+12,y+35,9,2,'#8e3458');
+ // silver and amethyst gothic crown
+ box(x+1,y+8,27,5,'#8c879d');box(x+3,y+0,5,10,'#aaa3b9');
+ box(x+13,y-7,6,17,'#c4b5c9');box(x+23,y+0,5,10,'#aaa3b9');
+ box(x+15,y+2,3,5,'#b34d8b');
+ // corseted bodice with prominent bust, narrow waist, and full hips
+ box(x+0,y+43,30,20,'#3a152e');
+ box(x-6,y+47,18,18,'#53203e');box(x+19,y+47,18,18,'#53203e');
+ box(x-7,y+51,18,4,'#8d4266');box(x+20,y+51,17,4,'#8d4266');
+ box(x+7,y+62,19,15,'#251027');box(x+13,y+63,6,13,'#a86c8d');
+ box(x-3,y+76,36,9,'#411b38');
+ box(x-17,y+48,9,27,'#d5a6a4');box(x+37,y+48,9,27,'#d5a6a4');
+ box(x-19,y+46,12,8,'#211020');box(x+36,y+46,12,8,'#211020');
+ box(x+15,y+65,3,4,'#e3c3d5');box(x+15,y+72,3,3,'#e3c3d5');
+ ctx.fillStyle='#f9d8ea';ctx.font='20px Georgia';ctx.fillText('Queen Ayleen ♡',408,384);
+}
+function draw(){scene();if(state==='won'){ctx.fillStyle='#1a0e27dd';ctx.fillRect(0,0,W,H);drawQueen()}}
+function loop(now){const dt=last?Math.min((now-last)/16.667,2):1;last=now;if(state==='playing')physics(dt);else tick+=dt;draw();requestAnimationFrame(loop)}
+function attack(){if(state!=='playing'||attackCooldown>0)return;attackFrames=13;attackCooldown=27}
+$('attack').addEventListener('pointerdown',e=>{e.preventDefault();attack()});
+$('start').addEventListener('click',startGame);
+$('restart').addEventListener('click',()=>{if(state==='playing'){loadLevel(li);say('THE TRIAL BEGINS ANEW!')}else startGame()});
+const bind=(id,key)=>{const el=$(id);const down=e=>{e.preventDefault();keys[key]=true;if(key==='jump')jumpQueued=true;el.setPointerCapture?.(e.pointerId)};const up=e=>{e.preventDefault();keys[key]=false};el.addEventListener('pointerdown',down);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);el.addEventListener('lostpointercapture',()=>keys[key]=false)};
+bind('left','left');bind('right','right');bind('jump','jump');bind('shield','shield');
+document.addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(['arrowleft','arrowright','arrowup',' ','w','a','d','r','j','k'].includes(k))e.preventDefault();if(k==='arrowleft'||k==='a')keys.left=true;if(k==='arrowright'||k==='d')keys.right=true;if(k==='arrowup'||k==='w'||k===' '){if(!keys.jump)jumpQueued=true;keys.jump=true}if(k==='j'&&!e.repeat)attack();if(k==='k')keys.shield=true;if(k==='r'&&state==='playing'){$('restart').click()}if(k==='enter'&&state!=='playing')$('start').click()});
+document.addEventListener('keyup',e=>{const k=e.key.toLowerCase();if(k==='arrowleft'||k==='a')keys.left=false;if(k==='arrowright'||k==='d')keys.right=false;if(k==='arrowup'||k==='w'||k===' ')keys.jump=false;if(k==='k')keys.shield=false});
+window.addEventListener('blur',()=>{keys.left=keys.right=keys.jump=keys.shield=false});
+loadLevel(0);state='menu';requestAnimationFrame(loop);
+</script></body></html>
